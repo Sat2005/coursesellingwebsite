@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { z } from "zod";
-import config from "../config.js";
+
 import { Admin } from "../models/admin.model.js";
 
 export const signup = async (req, res) => {
@@ -63,7 +63,7 @@ export const login = async (req, res) => {
       {
         id: admin._id,
       },
-      config.JWT_ADMIN_PASSWORD,
+      process.env.JWT_ADMIN_PASSWORD,
       { expiresIn: "1d" }
     );
     const cookieOptions = {
