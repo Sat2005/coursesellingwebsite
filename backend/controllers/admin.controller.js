@@ -67,13 +67,13 @@ export const login = async (req, res) => {
       { expiresIn: "1d" }
     );
     const cookieOptions = {
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-      httpOnly: true, //  can't be accsed via js directly
-      secure: process.env.NODE_ENV === "production", // true for https only
-      sameSite: "Strict", // CSRF attacks
-    };
-    res.cookie("jwt", token, cookieOptions);
-    res.status(201).json({ message: "Login successful", admin, token });
+  httpOnly: true,
+  secure: true,          // ✅ always true (https)
+  sameSite: "None",      // ✅ MOST IMPORTANT
+};
+res.cookie("jwt", token, cookieOptions);
+res.status(200).json({ message: "Login successful", admin, token });
+   
   } catch (error) {
     res.status(500).json({ errors: "Error in login" });
     console.log("error in login", error);
